@@ -15,9 +15,6 @@ class _LoginPageState extends State<LoginPage> {
   String? _userName;
   String? _userPassword;
 
-  //começar a brincar.
-  LoginViewModel _loginViewModel = LoginViewModel();
-
   @override
   void initState() {
     super.initState();
@@ -102,10 +99,10 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
               const SizedBox(height: 8.0),
-              provider.loginStatus == LoginStatus.loading
-                  ? Text('teste')
-                  : TextButton(
-                      onPressed: () {
+              TextButton(
+                onPressed: provider.loginStatus == LoginStatus.loading
+                    ? null
+                    : () {
                         bool isValid = _formKey.currentState!.validate();
                         if (!isValid) {
                           return;
@@ -113,22 +110,9 @@ class _LoginPageState extends State<LoginPage> {
 
                         _formKey.currentState!.save();
 
-                        print('email: $_userName');
-                        print('email: $_userPassword');
-
-                        //_loginViewModel.login(_userName!, _userPassword!);
                         provider.login(_userName!, _userPassword!);
-                        //print('Resultado: ${_loginViewModel.loginStatus}');
                       },
-                      child: Text('Me aperte'),
-                    ),
-              //botão de teste
-
-              TextButton(
-                onPressed: () {
-                  print('Resultado: ${_loginViewModel.loginStatus}');
-                },
-                child: Text('Me teste'),
+                child: Text('Login'),
               ),
             ],
           ),
