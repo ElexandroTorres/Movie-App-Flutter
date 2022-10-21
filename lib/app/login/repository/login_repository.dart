@@ -1,8 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-import 'package:movie_app_flutter/app/login/model/token_request.dart';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
+import 'package:movie_app_flutter/app/login/model/token_request.dart';
 import 'package:movie_app_flutter/app/utils/constants.dart';
 
 class NoInternetException implements Exception {}
@@ -10,12 +12,18 @@ class NoInternetException implements Exception {}
 class FailToLoginException implements Exception {}
 
 class LoginRepository {
+  http.Client client;
+
+  LoginRepository({
+    required this.client,
+  });
+
   TokenRequest tokenRequest = TokenRequest();
 
   Future<TokenRequest> getTokenRequest() async {
     String url = '$baseUrl/authentication/token/new?api_key=$apiKey';
 
-    var response = await http.get(Uri.parse(url));
+    var response = await client.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       var roverInfos = jsonDecode(response.body);
@@ -24,7 +32,7 @@ class LoginRepository {
 
       return tokenRequest;
     } else {
-      throw NoInternetException();
+      throw Exception();
     }
   }
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/app/login/model/token_request.dart';
 import 'package:movie_app_flutter/app/login/repository/login_repository.dart';
+import 'package:http/http.dart' as http;
 
 enum LoginStatus { loggedOut, loading, success, loginError, internetError }
 
 class LoginViewModel extends ChangeNotifier {
-  final LoginRepository loginRepository = LoginRepository();
+  final LoginRepository loginRepository =
+      LoginRepository(client: http.Client());
   LoginStatus loginStatus = LoginStatus.loggedOut;
   late TokenRequest tokenRequest;
 
