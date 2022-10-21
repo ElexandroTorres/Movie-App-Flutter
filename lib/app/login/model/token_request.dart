@@ -1,5 +1,5 @@
 class TokenRequest {
-  bool? success;
+  bool? success = false;
   String? expiresAt;
   String? requestToken;
 
@@ -29,9 +29,9 @@ class TokenRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    data['expires_at'] = this.expiresAt;
-    data['request_token'] = this.requestToken;
+    data['success'] = success;
+    data['expires_at'] = expiresAt;
+    data['request_token'] = requestToken;
     return data;
   }
 

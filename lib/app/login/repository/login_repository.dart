@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:movie_app_flutter/app/login/model/token_request.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:movie_app_flutter/app/utils/constants.dart';
 
 class LoginRepository {
   TokenRequest tokenRequest = TokenRequest();
 
-  Future<TokenRequest> getTokenRquest() async {
-    String url =
-        'https://api.themoviedb.org/3/authentication/token/new?api_key=ccf5fd2c3d7836bd34d8b2a21a18c8b6';
+  Future<TokenRequest> getTokenRequest() async {
+    String url = '$baseUrl/authentication/token/new?api_key=$apiKey';
 
     var response = await http.get(Uri.parse(url));
 
@@ -26,7 +26,7 @@ class LoginRepository {
 
   Future<TokenRequest> login(String userName, String password) async {
     String url =
-        'https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=ccf5fd2c3d7836bd34d8b2a21a18c8b6';
+        '$baseUrl/authentication/token/validate_with_login?api_key=$apiKey';
 
     final headers = {'Content-Type': 'application/json'};
     Map<String, dynamic> body = {
