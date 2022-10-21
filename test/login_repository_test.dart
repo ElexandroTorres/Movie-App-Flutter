@@ -21,7 +21,7 @@ void main() {
   test('Testando o viewmodel', () async {
     final LoginViewModel loginViewModel = LoginViewModel();
     print('requerimento do toke: ${loginViewModel.loginStatus.toString()}');
-    await loginViewModel.login('elexandro.torres', 'corynthyan');
+    await loginViewModel.login('elexandro.torres', 'corynthyans');
     print('requerimento do toke: ${loginViewModel.loginStatus.toString()}');
     expect(1, 1);
   });

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:movie_app_flutter/app/login/viewmodel/login_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,11 +12,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String? _userEmail;
+  String? _userName;
   String? _userPassword;
+
+  //começar a brincar.
+  LoginViewModel _loginViewModel = LoginViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<LoginViewModel>(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -34,12 +42,12 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 }),
                 onSaved: ((newValue) {
-                  _userEmail = newValue!;
+                  _userName = newValue!;
                 }),
                 decoration: InputDecoration(
                   fillColor: Colors.black,
-                  hintText: 'Digite o seu email',
-                  labelText: 'Email',
+                  hintText: 'Digite o nome de usuario',
+                  labelText: 'Usuario',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide(
@@ -57,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                keyboardType: TextInputType.emailAddress,
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 16.0),
               TextFormField(
@@ -94,18 +102,33 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
               const SizedBox(height: 8.0),
+              provider.loginStatus == LoginStatus.loading
+                  ? Text('teste')
+                  : TextButton(
+                      onPressed: () {
+                        bool isValid = _formKey.currentState!.validate();
+                        if (!isValid) {
+                          return;
+                        }
+
+                        _formKey.currentState!.save();
+
+                        print('email: $_userName');
+                        print('email: $_userPassword');
+
+                        //_loginViewModel.login(_userName!, _userPassword!);
+                        provider.login(_userName!, _userPassword!);
+                        //print('Resultado: ${_loginViewModel.loginStatus}');
+                      },
+                      child: Text('Me aperte'),
+                    ),
+              //botão de teste
+
               TextButton(
                 onPressed: () {
-                  var valido = _formKey.currentState!.validate();
-                  if (!valido) {
-                    return;
-                  }
-
-                  _formKey.currentState!.save();
-                  print('email: ${_userEmail}');
-                  print('senha: ${_userPassword}');
+                  print('Resultado: ${_loginViewModel.loginStatus}');
                 },
-                child: Text('Me aperte'),
+                child: Text('Me teste'),
               ),
             ],
           ),
