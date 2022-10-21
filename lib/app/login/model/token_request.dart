@@ -17,7 +17,7 @@ class TokenRequest {
     return TokenRequest(
       success: map['success'],
       expiresAt: map['expires_at'],
-      requestToken: map['requestToken'],
+      requestToken: map['request_token'],
     );
   }
 
@@ -33,5 +33,10 @@ class TokenRequest {
     data['expires_at'] = this.expiresAt;
     data['request_token'] = this.requestToken;
     return data;
+  }
+
+  @override
+  String toString() {
+    return '$success $expiresAt $requestToken';
   }
 }
