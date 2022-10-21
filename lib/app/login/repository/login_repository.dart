@@ -5,6 +5,10 @@ import 'package:movie_app_flutter/app/login/model/token_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_app_flutter/app/utils/constants.dart';
 
+class NoInternetException implements Exception {}
+
+class FailToLoginException implements Exception {}
+
 class LoginRepository {
   TokenRequest tokenRequest = TokenRequest();
 
@@ -20,7 +24,7 @@ class LoginRepository {
 
       return tokenRequest;
     } else {
-      throw Exception('${response.statusCode}');
+      throw NoInternetException();
     }
   }
 
@@ -47,8 +51,10 @@ class LoginRepository {
       tokenRequest = TokenRequest.fromMap(roverInfos);
 
       return tokenRequest;
+    } else if (response.statusCode == 401) {
+      throw FailToLoginException();
     } else {
-      throw Exception('${response.statusCode}');
+      throw NoInternetException();
     }
   }
 }

@@ -19,7 +19,10 @@ class LoginViewModel extends ChangeNotifier {
         loginStatus = LoginStatus.success;
         notifyListeners();
       }
-    } catch (error) {
+    } on NoInternetException catch (_) {
+      loginStatus = LoginStatus.internetError;
+      notifyListeners();
+    } on FailToLoginException catch (_) {
       loginStatus = LoginStatus.loginError;
       notifyListeners();
     }
