@@ -11,9 +11,8 @@ import '../repository/login_repository_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-  test('viewModel', () async {
+  test('Test Stats of Login when the login is sucessful', () async {
     final client = MockClient();
-    final List<String> results = [];
     LoginRepository loginRepository = LoginRepository(client: client);
     LoginViewModel loginViewModel = LoginViewModel(loginRepository);
     String urlToken = '$baseUrl/authentication/token/new?api_key=$apiKey';
@@ -36,12 +35,14 @@ void main() {
         '{"success": true,"expires_at": "2022-10-20 19:50:10 UTC","request_token": "abcd"}',
         200));
 
+    int a = 1;
     loginViewModel.addListener(() {
-      results.add(loginViewModel.loginStatus.toString());
+      if (a == 1) {
+        expect(loginViewModel.loginStatus, LoginStatus.loading);
+        a++;
+      } else if (a == 2) {
+        expect(loginViewModel.loginStatus, LoginStatus.success);
+      }
     });
-
-    loginViewModel.login('userName', 'password');
-
-    expect(loginViewModel.loginStatus, LoginStatus.loading);
   });
 }
