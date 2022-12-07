@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app_flutter/app/login/view/widgets/login_input.dart';
 import 'package:movie_app_flutter/app/login/viewmodel/login_viewmodel.dart';
+import 'package:movie_app_flutter/app/movie/view/pages/top_rated_page.dart';
+import 'package:movie_app_flutter/app/utils/constants.dart';
 import 'package:movie_app_flutter/app/utils/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
