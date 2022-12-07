@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/app/utils/theme/app_theme.dart';
+import 'package:movie_app_flutter/app/utils/theme/app_theme.dart';
 
 class LoginInput extends StatelessWidget {
   const LoginInput({
